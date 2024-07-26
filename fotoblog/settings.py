@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-3+5peg+3a#cw_%f1r12ik^dvlye#ren&@bl^&@8)h*dt(b^lkp
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.2', '127.0.0.3', '192.168.100.124']
 
 
 # Application definition
@@ -49,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'middleware.AdminOnlineMiddleware',
 ]
 
 ROOT_URLCONF = 'fotoblog.urls'
@@ -56,7 +57,9 @@ ROOT_URLCONF = 'fotoblog.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+		BASE_DIR.joinpath('templates')
+	],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -94,11 +97,8 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+        'NAME':'authentication.validators.ContainsLetterValidators',
+    }
 ]
 
 
@@ -118,8 +118,26 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR.joinpath('static/')
+
+# Configuration des fichiers médias 
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR.joinpath('media/')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+AUTH_USER_MODEL = 'authentication.User'
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'home'
+#LOGOUT_REDIRECT_URL = 'login'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'gbedagbehonorat@gmail.com'
+EMAIL_HOST_PASSWORD = 'ttrovwndfagidfaq'
+DEFAULT_FROM_EMAIL = 'gbedagbehonorat@gmail.com'

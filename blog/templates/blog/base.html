@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang='fr'>
+<head>
+    <title>FotoBlog</title>
+    <link rel = 'stylesheet' href={% static 'style.css'%}>
+</head>
+<body>
+    <h1>FotoBlog</h1>
+    <div class = 'div-class'>
+    {% if user.is_authenticated %}
+        <p> Salut {{ user.username }}</p> <br>
+        {% if user.is_superuser %}
+            <p>Bienvenue, superutilisateur!</p>
+        {% endif %}
+        {% if user.photo_profil %}
+            <img src="{{ user.photo_profil.url }}"> <br>
+        {% else %}
+            <img src="{% static 'Images/default_avatar.png' %}"> <br>
+        {% endif %}
+
+        <a href="{% url 'profil_photo' %}">Modifiez votre Profil</a> <br>
+        {% if perms.blog.add_photo %}
+            <a href="{% url 'photo_upload' %}">Postez une Image</a> <br>
+        {% endif %}
+        <a href="{% url 'change_password' %}">Changer votre mot de passe</a> <br>
+        <a href="{% url 'billets_de_blog' %}">Voir les Billets de Blog</a> <br>
+        <a href="{% url 'follows_creators' %}">Suivre des créateurs</a> <br>
+        {% if perms.blog.add_blog %}
+            <a href="{% url 'billet_de_blog' %}">Publiez un billet de Blog</a> <br>
+        {% endif %}
+        {% if perms.blog.change_blog %}
+        {% if perms.blog.delete_blog %}
+            <a href="{% url 'billets_de_blog' %}">Modifiez un billet de Blog</a> <br>
+        {% endif %}
+        {% endif %}
+
+        {% if perms.blog.view_photo %}
+            <a href="{% url 'flux_feed' %}">Voir uniquement des photos</a> <br>
+        {% endif %}
+
+
+        
+
+
+        <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <input type="submit" value="Se déconnecter"><br>
+        </form> <br>
+    {% endif %}
+    {% block content %}
+    {% endblock content %}
+    <div>
+</body>
+</html>

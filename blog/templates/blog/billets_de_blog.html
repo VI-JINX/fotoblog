@@ -1,0 +1,14 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+    <h1> Photographie </h1>
+    {% if perms.blog.view_blog %}
+    {% for billet_blog in billets_blog %}
+        <a href = {% url 'description_billet' billet_blog.id %}> {{ billet_blog.title}}</a> <br> 
+        {% if perms.blog.change_blog %}
+        {% if perms.blog.delete_blog %}
+            <a href = {% url 'delete_or_edit_billet' billet_blog.id %}> Modifiez </a> <br> 
+        {% endif %} 
+        {% endif %}
+    {% endfor %}
+    {% endif %} 
+{% endblock content %}

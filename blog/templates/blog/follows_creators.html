@@ -1,0 +1,9 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+<h1> Suivre un créateur </h1>
+<form method='post'>
+    {{ follow_form.as_p }}
+    {% csrf_token %}
+    <input type = 'submit' value = 'Suivre'>
+</form>
+{% endblock content %}

@@ -1,0 +1,17 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+    <h1> Modifiez un Billet de Blog </h1>
+    <form method = "post">
+        {{ blog_form.as_p }}
+        {% csrf_token %}
+        <input type = submit value = "Modifier">
+    </form>
+    {% if perms.is_superuser %}
+        <h1> Supprimez un Billet de Blog </h1>
+        <form method = "post">
+            {{ delete_form.as_p }}
+            {% csrf_token %}
+        <input type = submit value = "Supprimer">
+        </form>
+    {% endif %}
+{% endblock content %}

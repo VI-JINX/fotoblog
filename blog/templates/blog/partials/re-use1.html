@@ -1,0 +1,29 @@
+{% block content %}
+{% load blog_extras %}
+
+{% for photo in page_obj %}
+    <div>
+        <img src="{{ photo.image.url }}" alt="{{ photo.captions }}" width="300" heigth="200">
+        <p>Légende: {{ photo.captions }}</p>
+        <p>Publié par: {% get_user_name photo.uploader %}</p>
+        <p> {% get_posted_at_display photo.date_created %}</p>
+    </div>
+{% endfor %}
+{% if page_obj.has_previous %}
+    <div>
+        <a href="?page={{page_obj.previous_page_number }}"> Précedent </a> <br>
+        <a href="?page=1"> Revenir à la première page </a> <br>
+    </div>
+{% endif %}
+    <span>
+
+        <p> Page {{page_obj.number }} / {{ page_obj.paginator.num_pages}} <p> <br>
+
+    </span>
+{% if page_obj.has_next %}
+    <div>
+        <a href="?page={{page_obj.next_page_number }}"> Suivant</a> <br>
+    </div>
+{% endif %}
+
+{% endblock content %}

@@ -1,0 +1,9 @@
+{% comment %} {% extends 'blog/base.html' %} {% endcomment %}
+{% block content %}
+{% comment %} {% load blog_extras %} {% endcomment %}
+    <p> Auteur: {{ blog.author }}</p>
+    <p> Photo: {{ blog.photo.url }}</p>
+    <p> Description: {{ blog.content }}</p>
+    <p> Starred: {{ blog.starred|yesno }}</p>
+    <p> Nombre de mots:  {{ blog.word_count }}</p>
+{% endblock content %}

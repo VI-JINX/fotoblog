@@ -1,0 +1,10 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+<h1> Publiez un billet de Blog </h1> 
+<form method = "post" enctype = "multipart/form-data">
+    {% csrf_token %}
+    {{ blog_form.as_p }}
+    {{ photo_form.as_p }}
+    <input type = submit value = "Publiez" >
+</form>
+{% endblock content %}

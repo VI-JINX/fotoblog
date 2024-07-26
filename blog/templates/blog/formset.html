@@ -1,0 +1,11 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+<h1> Publiez pluisieurs Images </h1>
+    <form method = "post" enctype = multipart/form-data>
+        {{ PhotoSets.management_form }}
+        {% csrf_token %}
+        {% for PhotoSet in PhotoSets %}
+            {{ PhotoSet.as_p }}
+        {% endfor %}
+        <input type = submit value = "Publiez">
+{% endblock content %}

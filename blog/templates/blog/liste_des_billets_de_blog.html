@@ -1,0 +1,6 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+{% comment %} {% load blog_extras%} {% endcomment %}
+<h1> Photographie </h1>
+    {% include 'blog/partials/re_use.html' with blog=billet%}
+{%  endblock content %}

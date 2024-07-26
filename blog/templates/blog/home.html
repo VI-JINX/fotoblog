@@ -1,0 +1,44 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% load blog_extras %}
+{% get_user_name user %}
+{% block content %}
+    {% for blog_or_photo in page_obj %}
+        {% if blog_or_photo|model_type == 'Blog' %}
+        <div>
+            <p>Titre: {{ blog_or_photo.title }}</p>
+            <p>Description: {{ blog_or_photo.content }}</p>
+            <p>Date: {{ blog_or_photo.date_created }}</p>
+            {% comment %}<p>Contributeurs: {{ blog_or_photo.contributors }}</p>{% endcomment %}
+            <img src="{{ blog_or_photo.photo.image.url}} " alt="{{ blog_or_photo.photo.captions }}" width="300" heigth="200">
+        </div>
+        {% endif %}
+        {% if blog_or_photo|model_type == 'Photo' %}
+        <div>
+            <img src="{{ blog_or_photo.image.url }}" alt="{{ blog_or_photo.title }}" width="300" heigth="200">
+            <p>Légende: {{ blog_or_photo.captions }}</p>
+            <p>Publié par: {% get_user_name blog_or_photo.uploader %}</p>
+            <p> {% get_posted_at_display blog_or_photo.date_created %}</p>
+        </div>
+        {% endif %}
+
+    {% endfor %}
+    {% if page_obj.has_previous %}
+            <div>
+
+                <a href="?page={{ page_obj.previous_page_number }}"> Précédent </a> <br> 
+                <a href="?page=1"> Retourner à la première page </a> <br>
+
+            <span> 
+                <p> Page {{page_obj.number }} / {{ page_obj.paginator.num_pages}}</p>
+            </span>
+    {% endif %}
+
+    {% if page_obj.has_next %}
+
+            <a href="?page={{page_obj.next_page_number }}"> Suivant</a> <br>
+            {% comment %} <a href="?page={{page.obj.paginator.num_pages }}"> Précedente</a> {% endcomment %}
+
+    {% endif %}
+
+{% endblock content %}
